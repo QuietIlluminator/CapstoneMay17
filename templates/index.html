@@ -1,0 +1,135 @@
+<html>
+
+<head>
+    <title>Skin Lesion Classification</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/styles.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+</head>
+
+<body>
+    <p>
+    <h1 align="center">Skin Lesion Classification</h1>
+    </p>
+    <div class="container">
+        <div class="row">
+            <h2>Select a file to upload</h2>
+            <p>
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+            <ul>
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+            </p>
+            {% if filename %}
+            <div>
+                <img src="{{ url_for('display_image', filename=filename) }}" , width="300" , height="300">
+            </div>
+
+            {% endif %}
+            <form method="post" action="/main" enctype="multipart/form-data">
+                <dl>
+                    <p>
+                        <input type="file" name="file" class="form-control" autocomplete="off" required>
+                    </p>
+                </dl>
+                <p>
+                    <input type="submit" value="Submit" class="btn btn-info">
+                </p>
+            </form>
+
+            <h1>Classification: {{predicted}}</h1>
+            {% if predicted == "Melanoma" %}
+            <form method="post" action="/result" enctype="multipart/form-data">
+                <dl>
+                    <p>
+                    <div>
+                        <h3>Temperature of Melanoma Skin-region:</h3>
+                        <input type="text" name="mel_temp">
+                    </div>
+                    <div>
+                        <h3>Temperature of Normal Skin-region</h3>
+                        <input type="text" name="skin_temp">
+                    </div>
+                    </p>
+                </dl>
+                <p>
+                    <input type="submit" value="Submit" class="btn-confirm">
+                </p>
+            </form>
+            
+            <p>{{res}}</p>
+
+            
+            <p>Melanoma is _____________________________________________________________________________________________.</p>
+
+            
+            {% endif %}
+
+
+
+            {% if predicted == "Actinic keratosis" %}
+            <p>Actinic keratosis is _____________________________________________________________________________________________.</p>
+            
+            {% endif %}
+
+
+
+
+            {% if predicted == "Basal cell carcinoma" %}
+            <p>Basal cell carcinoma is _____________________________________________________________________________________________.
+            </p>
+            
+            {% endif %}
+
+
+
+            {% if predicted == "Benign keratosis-like lesions" %}
+            <p>Benign keratosis-like lesions is
+                _____________________________________________________________________________________________.
+            </p>
+            
+            {% endif %}
+
+
+
+            {% if predicted == "Dermatofibroma" %}
+            <p>Dermatofibroma is
+                _____________________________________________________________________________________________.
+            </p>
+            
+            {% endif %}
+
+
+            {% if predicted == "Nevus" %}
+            <p>Nevus is
+                _____________________________________________________________________________________________.
+            </p>
+            
+            {% endif %}
+
+
+
+            {% if predicted == "Vascular lesions" %}
+            <p>Vascular lesions is
+                _____________________________________________________________________________________________.
+            </p>
+            
+            {% endif %}
+
+                <ul>
+                    {% for file in files %}
+                    
+                    <img src="{{ url_for('static', filename='file') }}" class="image" />
+
+                    {% endfor %}
+                </ul>
+
+        </div>
+    </div>
+</body>
+
+</html>
